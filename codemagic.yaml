@@ -1,0 +1,26 @@
+workflows:
+  build-android-apk:
+    name: Build Android APK
+    max_build_duration: 60
+    environment:
+      flutter: stable
+      android: true
+      xcode: latest
+      vars:
+        PACKAGE_NAME: "com.ejemplo.appparadiabeticos"
+    scripts:
+      - name: Instalar dependencias
+        script: |
+          flutter pub get
+      - name: Verificar dependencias desactualizadas
+        script: |
+          flutter pub outdated || true
+      - name: Compilar APK
+        script: |
+          flutter build apk --release
+    artifacts:
+      - build/app/outputs/flutter-apk/app-release.apk
+    publishing:
+      email:
+        recipients:
+          - tu-email@example.com
